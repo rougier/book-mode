@@ -1,0 +1,26 @@
+
+*Book mode* - /Nicolas Rougier - October 1st, 2022/ *(WIP)*
+
+Book mode is an attempt at offering an interface for reading org-mode files with a clean layout. It is based on the use of large margins, headline and mode-line, with leading stars and bullets in the left margin using right alignment and different symbols. All decorations are part of the header-line (including upper left colored part and right upper glyph) and messages are displayed in the mode-line.
+
+* Section
+
+Using font lock keywords, we can have outer indent by moving leading stars into the left margin such that text is always aligned. This could be extended to org-num-mode but it would require a bigger margin and dedicated regex. This is applied for level 1, 2 and 3 while level 4 has a special transformation to make it appear like a paragraph (see below).
+
+** Subsection
+
+Using the same trick, we can also move list bullets in the margin and use a nicer glyph ("•" instead of "-"):
+
+- Item 1
+- Item 2
+
+Not everyone like to have bullets in the margin though.
+
+*** Subsubsection
+
+The hl-line has been extended to margins such that it goes from side to side and plays nicely with leading stars and bullets.
+
+**** Paragraph
+This is actually a fourth level heading with a special keyword that suppress the (first) line jump. This results in the first paragraph to immediately follows the heading (like a paragraph in LaTeX).
+
+
