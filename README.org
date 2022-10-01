@@ -1,4 +1,6 @@
 
+[[./book-mode.png]]
+
 *Book mode* - /Nicolas Rougier - October 1st, 2022/ *(WIP)*
 
 Book mode is an attempt at offering an interface for reading org-mode files with a clean layout. It is based on the use of large margins, headline and mode-line, with leading stars and bullets in the left margin using right alignment and different symbols. All decorations are part of the header-line (including upper left colored part and right upper glyph) and messages are displayed in the mode-line.
