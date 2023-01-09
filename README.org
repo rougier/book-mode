@@ -1,9 +1,12 @@
 
+#+attr_org: :width 600
 [[./book-mode.png]]
 
-*Book mode* - /Nicolas Rougier - October 1st, 2022/ *(WIP)*
+*Book mode* - /Nicolas Rougier - January 9, 2023/ (*WIP*)
 
 Book mode is an attempt at offering an interface for reading org-mode files with a clean layout. It is based on the use of large margins, headline and mode-line, with leading stars and bullets in the left margin using right alignment and different symbols. All decorations are part of the header-line (including upper left colored part and right upper glyph) and messages are displayed in the mode-line.
+
+*See also* inside article directory for a more advanced and experimental example.
 
 * Section
 
@@ -25,4 +28,51 @@ The hl-line has been extended to margins such that it goes from side to side and
 **** Paragraph
 This is actually a fourth level heading with a special keyword that suppress the (first) line jump. This results in the first paragraph to immediately follows the heading (like a paragraph in LaTeX).
 
+#+begin_src emacs-lisp :results none
+
+(when (derived-mode-p 'org-mode)
+  (add-to-list 'font-lock-extra-managed-props 'display)
+  ;;(setq left-margin 5)
+  ;;(setq left-margin-width left-margin)
+  ;;(set-window-margins (selected-window) left-margin 0)
+  (let ((margin-format (format "%%%ds" left-margin-width)))
+    (font-lock-add-keywords nil
+       `(
+         ("^\\(\\- \\)\\(.*\\)$"
+          1 '(face nano-default display ((margin left-margin)
+                                         ,(propertize (format margin-format "• ")
+                                                      'face '(:inherit nano-default :weight light)) append)))
+
+         ("^\\(\\*\\{1\\} \\)\\(.*\\)$"
+          1 '(face nano-faded display ((margin left-margin)
+                                       ,(propertize (format margin-format "# ")
+                                                    'face '(:inherit nano-faded :weight light)) append))
+          2 '(face bold append))
+
+         ("^\\(\\*\\{2\\} \\)\\(.*\\)$"
+          1 '(face nano-faded display ((margin left-margin)
+                                       ,(propertize (format margin-format "## ")
+                                                    'face '(:inherit nano-faded :weight light)) append))
+          2 '(face bold append))
+
+         ("^\\(\\*\\{3\\} \\)\\(.*\\)$"
+          1 '(face nano-faded display ((margin left-margin)
+                                       ,(propertize (format margin-format "### ")
+                                                    'face '(:inherit nano-faded :weight light)) append))
+          2 '(face bold append))
+
+         ("^\\*\\{4\\} .*?\\(\n\\)"
+          1 '(face nil display " - "))
+
+         ("^\\(\\*\\{4\\} \\)\\(.*?\\)$"
+          1 '(face nano-faded display ((margin left-margin)
+                                       ,(propertize (format margin-format "§ ")
+                                                    'face '(:inherit nano-faded :weight light))  append))
+          2 '(face bold append)))))
+
+  (font-lock-fontify-buffer)
+  ;; (visual-line-mode)
+  )
+
+#+end_src
 

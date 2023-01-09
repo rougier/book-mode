@@ -1,0 +1,14 @@
+
+* Book mode experiment
+
+This repository contains files needed to setup emacs such as to achieve the following layout:
+
+[[file:screenshot.png]]
+
+If you want to reproduce the layout, you'll need to install several packages:
+
+- [[https://github.com/rougier/nano-theme][nano-theme]]
+- [[https://github.com/rougier/svg-tag-mode][svg-tag-mode]]
+- [[https://github.com/rougier/book-mode][book-mode]]
+
+Then load [[draft.org][draft.org]], enter book-mode and execute the 3 blocks under "Confguration" in the draft.org file. This still highly experimental, you can expect several bugs...
