@@ -1,5 +1,5 @@
-
-*On the Design of Text Editors* — Nicolas P. Rougier
+#+TITLE: On the Design of Text Editors
+#+AUTHOR: Nicolas P. Rougier
 
 #+begin_abstract
 Code editors are written by and for developers. They come with a large set of default and implicit choices in terms of layout, typography, colorization and interaction that hardly change from one editor to the other. It is not clear if these implicit choices derive from the ignorance of alternatives or if they derive from developers’ habits, reproducing what they are used to. The goal of this article is to characterize these implicit choices and to illustrate what are alternatives, without prescribing one or the other.
@@ -122,13 +122,23 @@ I've highlighted several implicit choices that are present in a number of both o
 #+bibliography: draft.bib
 
 *** Header & footers
+#+Name: startup
 #+begin_src emacs-lisp :results none
-(setq-local header-line-format
-    (book-mode--header :prefix #'book-mode-element-frame-count-icon
-                       :left (propertize "On the Design of Text Editors" 'face 'nano-strong)
-                       :right "Nicolas P. Rougier"
-                       :suffix #'book-mode-element-dedicated))
+  (defun get-option (tag)
+    (goto-char (point-min))
+    (goto-char (search-forward tag))
+    (beginning-of-line)
+    (org-element-property :value (org-element-at-point)))
+
+  (let ((title  (get-option "#+TITLE:"))
+        (author (get-option "#+AUTHOR:")))
+    (setq-local header-line-format
+                (book-mode--header :prefix #'book-mode-element-frame-count-icon
+                                   :left (propertize title 'face 'nano-strong)
+                                   :right author
+                                   :suffix #'book-mode-element-dedicated)))
 #+end_src
+
 
 *** SVG tag mode
 #+begin_src emacs-lisp :results none
@@ -274,3 +284,6 @@ I've highlighted several implicit choices that are present in a number of both o
 
 #+end_src
 
+# Local Variables:
+# eval: (progn (org-babel-goto-named-src-block "startup") (org-babel-execute-src-block))
+# End:
