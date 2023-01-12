@@ -124,19 +124,24 @@ I've highlighted several implicit choices that are present in a number of both o
 *** Header & footers
 #+Name: startup
 #+begin_src emacs-lisp :results none
-  (defun get-option (tag)
+(defun update-headings ()
+    (defun get-option (tag)
     (goto-char (point-min))
-    (goto-char (search-forward tag))
-    (beginning-of-line)
-    (org-element-property :value (org-element-at-point)))
+    (let ((tag-pos (ignore-error search-failed (search-forward tag))))
+      (if tag-pos (progn
+                    (goto-char tag-pos)
+                    (beginning-of-line)
+                    (org-element-property :value (org-element-at-point)))
+        nil)))
 
   (let ((title  (get-option "#+TITLE:"))
         (author (get-option "#+AUTHOR:")))
-    (setq-local header-line-format
-                (book-mode--header :prefix #'book-mode-element-frame-count-icon
-                                   :left (propertize title 'face 'nano-strong)
-                                   :right author
-                                   :suffix #'book-mode-element-dedicated)))
+    (when title
+      (setq-local header-line-format
+                  (book-mode--header :prefix #'book-mode-element-frame-count-icon
+                                     :left (propertize title 'face 'nano-strong)
+                                     :right (or author "")
+                                     :suffix #'book-mode-element-dedicated)))))
 #+end_src
 
 
