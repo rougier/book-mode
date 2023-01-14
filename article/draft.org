@@ -122,23 +122,19 @@ I've highlighted several implicit choices that are present in a number of both o
 #+bibliography: draft.bib
 
 *** Header & footers
-#+Name: startup
+
 #+begin_src emacs-lisp :results none
-  (defun get-option (tag)
-    (goto-char (point-min))
-    (goto-char (search-forward tag))
-    (beginning-of-line)
-    (org-element-property :value (org-element-at-point)))
+(defun my/get-option (tag)
+  (cadr (nth 0 (org-collect-keywords `(,tag)))))
 
-  (let ((title  (get-option "#+TITLE:"))
-        (author (get-option "#+AUTHOR:")))
-    (setq-local header-line-format
-                (book-mode--header :prefix #'book-mode-element-frame-count-icon
-                                   :left (propertize title 'face 'nano-strong)
-                                   :right author
-                                   :suffix #'book-mode-element-dedicated)))
+(let ((title  (my/get-option "TITLE"))
+      (author (my/get-option "AUTHOR")))
+  (setq-local header-line-format
+              (book-mode--header :prefix #'book-mode-element-frame-count-icon
+                                 :left (propertize title 'face 'nano-strong)
+                                 :right author
+                                 :suffix #'book-mode-element-dedicated)))
 #+end_src
-
 
 *** SVG tag mode
 #+begin_src emacs-lisp :results none

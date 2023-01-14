@@ -27,7 +27,7 @@
 ;;; Code:
 (require 'seq)
 (require 'nano-theme)
-(require 'nano-command)
+;; (require 'nano-command)
 
 (defgroup book-mode nil
   "Book mode"
