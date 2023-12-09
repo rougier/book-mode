@@ -79,6 +79,10 @@
   :type 'boolean
   :group 'book-mode)
 
+(defcustom book-mode-display-frame-index nil
+  "Whether to display frame index"
+  :type 'boolean
+  :group 'book-mode)
 
 (defun book-mode--log (format-string &rest args)
   "Log a message into the *Messages* buffer if message-log-max is
@@ -239,7 +243,7 @@ saves the message in a buffer local variable."
   "Prefix element displaying frame count and an icon."
   
   (concat
-   (book-mode-element-frame-count)
+   (if book-mode-display-frame-index (book-mode-element-frame-count) (book-mode-element-empty))
    "   "
    (cond (icon 
           (propertize (format "%s " icon) 'face 'nano-default))
