@@ -626,6 +626,10 @@ saves the message in a buffer local variable."
                            :background (face-background 'default))
   (face-remap-add-relative 'window-divider
                            :foreground (face-foreground 'default))
+
+  (face-remap-set-base 'mode-line nil)
+  (face-remap-set-base 'mode-line-inactive nil)
+
   (face-remap-add-relative 'mode-line
                            :foreground (face-foreground 'default)
                            :background (face-background 'default)
